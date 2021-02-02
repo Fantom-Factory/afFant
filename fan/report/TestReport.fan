@@ -3,8 +3,7 @@
 ** 'OutStream'.
 **
 mixin TestReport {
-	**
+
 	** Write results to 'out' stream.
-	**
 	abstract Void write(OutStream out)
 }

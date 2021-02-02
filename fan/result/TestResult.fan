@@ -1,27 +1,18 @@
 using xml
 
-**
 ** Result of a test case.
-**
 const class TestResult : XTestResult {	
-	**
+
 	** See 'XTestResult.test'
-	**
 	override const Xtest test
 	
-	**
 	** See 'XTestResult.started'
-	**
 	override const DateTime started
 	
-	**
 	** See 'XTestResult.finished'
-	**
 	override const DateTime finished
 
-	**
 	** Constructor
-	**
 	new make(Xtest test, DateTime started) { 
 		this.test		 = test
 		this.started	= started
@@ -53,9 +44,8 @@ const class TestSkipped : TestResult {
 
 	
 const class TestIssue : TestResult {
-	**
+
 	** Error produced during execution
-	**
 	const Err? err
 		
 	new make(Xtest test, DateTime started, Err err) 

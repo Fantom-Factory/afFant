@@ -94,6 +94,7 @@ class TestSummaryTest : Test {
 	} 
 	
 	Void testXAttrSkipped() {
+		echo(xml.toStr)
 		attr := xml.attr("skipped", false)
 		verifyNotNull(attr)
 		verifyEq(attr.name, "skipped")

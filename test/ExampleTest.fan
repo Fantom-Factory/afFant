@@ -1,6 +1,4 @@
-**
 ** Test class with the different type of results, expected and unexpected.
-**	
 class ExampleTest : Test {
 	Void testShouldFail() {
 		verifyEq(true, false, "This test should be a failure")
@@ -16,5 +14,5 @@ class ExampleTest : Test {
 	
 	Void testShouldErr() {
 		throw Err("This test should be an error")
-	}	
+	}
 }

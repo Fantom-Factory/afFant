@@ -1,8 +1,6 @@
 using util
 
-**
 ** Main execution point of Xfant pod.
-**
 class Main : AbstractMain {
 	@Arg { help = "<pod> [pod]* | <pod>::<test> | <pod>::<test>.<method>" }
 	Str[] targets := [,]
@@ -10,37 +8,27 @@ class Main : AbstractMain {
 	@Opt { help = "test all pods" }
 	Bool all
 				
+	@Opt { help = "output file"; aliases=["o"] } 
+	File? output
+	
 	override Int run() {		
 		Xfant? xfant
 		
-		//
 		// Add tests to execute
-		//
+		xfant = Xfant {}
+		xfant.addAll(all ? Pod.list : targets)
+
 		
-		try {
-			xfant = Xfant {}
-			xfant.addAll(all ? Pod.list : targets)
-		} 
-		catch (Err err) {
-			log.err("Error in arguments: ${err.msg}", err)
-			return -1
-		}
-		
-		//
-		// if no tests where given, show usage
-		//
-		
+		// if no tests were given, show usage
 		if (!xfant.hasTests) {
+			echo("Could not find tests in: " + targets.join(" ") + "\n")
 			return usage
 		}
 		 
-		//
 		// Run tests
-		//
-		
 		try {
 			xfant.run
-			xfant.report(Env.cur.out)
+			xfant.report(output?.out ?: Env.cur.out, output != null) // If an output file is not specified, print to Env.cur
 			return 0
 		}
 		catch (Err err) {
@@ -49,4 +37,3 @@ class Main : AbstractMain {
 		}
 	}
 }
- 

@@ -89,11 +89,9 @@ class TestSkippedTest : Test {
 		verifyEq(skip.name, "skipped")
 		
 		// test attr
-		
 		verifyEq(skip.attrs.size, 0)
 		
 		// test XText
-		
 		verifyNull(skip.text)	
 	}
 }

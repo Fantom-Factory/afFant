@@ -55,7 +55,6 @@ class TestFailureTest : Test {
 		verifyEq(failure.name, "failure")
 		
 		// test message attr
-		
 		message := failure.attr("message", false)
 		
 		verifyNotNull(message)
@@ -63,7 +62,6 @@ class TestFailureTest : Test {
 		verifyEq(message.val, "Test failed: This test should be a failure")
 		
 		// test type attr
-		
 		type := failure.attr("type", false)
 					 
 		verifyNotNull(type)
@@ -71,7 +69,6 @@ class TestFailureTest : Test {
 		verifyEq(type.val, "TestErr")
 		
 		// test XText
-		
 		text := failure.text
 		
 		verifyNotNull(text)

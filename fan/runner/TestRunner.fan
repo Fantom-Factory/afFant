@@ -1,11 +1,8 @@
 
-**
 ** Execute the tests and returns the results.
-**
 class TestRunner { 
-	**
+
 	** Execute a test and return the results
-	**
 	XTestResult run(Xtest test) {
 		switch (test.typeof) {
 			case TestCase#:
@@ -17,9 +14,7 @@ class TestRunner {
 		}
 	}
 	
-	**
 	** Run a 'TestCase' and returns a result.
-	**
 	protected XTestResult runTestCase(TestCase test) {
 		if (test.isIgnored) {
 			return TestSkipped(test, DateTime.now)
@@ -46,10 +41,8 @@ class TestRunner {
 		}
 	}
 	
-	**
 	** Run all the tests in the suite, and returns the result
 	** as summary.
-	**
 	protected TestSummary runTestSuite(TestSuite suite) {
 		tests := (suite.isIgnored) ? 
 			[TestSkipped(suite, DateTime.now)] :
