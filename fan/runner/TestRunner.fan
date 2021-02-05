@@ -46,11 +46,15 @@ class TestRunner {
 	protected TestSummary runTestSuite(TestSuite suite) {
 		tests := (suite.isIgnored) ? 
 			[TestSkipped(suite, DateTime.now)] :
-			suite.tests.map { run(it) }
+			suite.tests.map |Xtest test->XTestResult| { 
+				return run(test) 
+			}
+		
 			
-		return TestSummary {
+		summary := TestSummary {
 			it.test		= suite
-			it.results = tests
+			it.results  = tests
 		}
+		return summary
 	} 
 }

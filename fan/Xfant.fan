@@ -82,14 +82,8 @@ class Xfant {
 	}
 	
 	** Write a report of the results in 'out' stream
-	Void report(OutStream out, Bool close := true) {
-		try {
-			XmlReport(results).write(out)			
-		}
-		finally {
-			if (close)
-				out.close
-		}
+	TestReport report() {
+			return XmlReport(results)
 	}
 		
 	** Run the test cases and saves the results
