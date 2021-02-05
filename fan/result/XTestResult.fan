@@ -14,7 +14,7 @@ mixin XTestResult {
 		
 	** Time elapsed in the execution of the test.
 	Duration elapsed() {
-		finished - started
+		return finished - started
 	}
 	
 	** Result of the test in Xml

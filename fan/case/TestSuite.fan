@@ -19,7 +19,7 @@ const class TestSuite : Xtest {
 			type.fits(Test#) && !type.isAbstract
 		}
 		
-		return types.map { TestSuite(it) }
+		return types.map { fromType(it) }.exclude { it == null }
 	}
 	
 	** Match 'pattern' with 'pod::type' and returns a 'TestSuite' 
@@ -36,7 +36,7 @@ const class TestSuite : Xtest {
 			pod	:= Pod.find(matcher.group(1))
 			type := pod.type(matcher.group(2))
 			
-			return make(type)
+			return fromType(type)
 		}
 		catch (Err e) {
 			if (checked) {
@@ -58,7 +58,7 @@ const class TestSuite : Xtest {
 	
 	** Constructor from 'type' adding all the test methods. 
 	** See 'TestCase'
-	new make(Type type) {		 
+	static new fromType(Type type) {
 		if (!type.fits(Test#)) {
 			throw ArgErr("Test type must be 'Test#' subclass")
 		}
@@ -67,14 +67,19 @@ const class TestSuite : Xtest {
 			throw ArgErr("Test type mustn't be abstract")
 		}
 
-		this.type = type
+		testMethods := findTestMethods(type)
+		if (testMethods.isEmpty)
+			return null
 		
-		// check if tests are ignored, not wasting time creating them
-		this.tests = (isIgnored) ?
-			Xtest#.emptyList :
-			findTestMethods(type).map { TestCase(it) }
+		return TestSuite() {
+			it.type	= type
+			it.tests = isIgnored ? Xtest#.emptyList : testMethods.map { TestCase(it) }
+		}
 	}
 	
+	** It block ctor.
+	new make(|This| f) { f(this) }
+
 	Bool isIgnored() {
 		type.hasFacet(Ignore#)
 	} 

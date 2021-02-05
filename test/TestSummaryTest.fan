@@ -8,9 +8,9 @@ class TestSummaryTest : Test {
 	
 	override Void setup() {
 		runner	= TestRunner()
-		test		= TestSuite(ExampleTest#)
+		test	= TestSuite.fromType(ExampleTest#)
 		summary = runner.run(test) as TestSummary
-		xml		 = summary.toXml
+		xml		= summary.toXml
 	}	
 		
 	Void testTotal() {
@@ -94,7 +94,6 @@ class TestSummaryTest : Test {
 	} 
 	
 	Void testXAttrSkipped() {
-		echo(xml.toStr)
 		attr := xml.attr("skipped", false)
 		verifyNotNull(attr)
 		verifyEq(attr.name, "skipped")

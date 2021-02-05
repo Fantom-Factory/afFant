@@ -27,7 +27,7 @@ class TestSummary : XTestResult {
 	
 	** Finish time of the last test
 	override DateTime finished() {
-		results.last.finished
+		return results.last.finished
 	}
 	 
 	** Frequency of tests by test type.
@@ -62,7 +62,7 @@ class TestSummary : XTestResult {
 		frequency[TestSkipped#]
 	}
 	
-	override XElem toXml() {
+	override XElem toXml() { 
 		xml := XElem("testsuite") {
 			XAttr("name", test.name),
 			XAttr("classname", test.classname),

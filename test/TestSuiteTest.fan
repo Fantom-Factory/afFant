@@ -1,6 +1,6 @@
 class TestSuiteTest : Test {
 	Void testMakeSuiteFromType() {
-		suite := TestSuite(ExampleTest#)
+		suite := TestSuite.fromType(ExampleTest#)
 		verify(suite.tests.size > 0)
 		verifyEq(suite.name, ExampleTest#.name)
 		verifyEq(suite.classname, ExampleTest#.qname)
