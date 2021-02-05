@@ -27,63 +27,39 @@ class XmlReport : TestReport {
 	}
 	
 	Int numFailures() {
-		if (results.isEmpty)
-			throw Err("Can't find any results")
-		
-		summaries := results.findAll |XTestResult result->Bool| { result.typeof == TestSummary# }
-		if (summaries.isEmpty)
-			return results.findAll { it.typeof == TestFailure# }.size
-		
-		failures := 0
-		summaries.each |TestSummary summary| { 
-			failures += summary.failures
+		countNumOf(TestFailure#) {
+			it.failures
 		}
-		return failures
 	}
 	
 	Int numErrors() {
-		if (results.isEmpty)
-			throw Err("Can't find any results")
-		
-		summaries := results.findAll |XTestResult result->Bool| { result.typeof == TestSummary# }
-		if (summaries.isEmpty)
-			return results.findAll { it.typeof == TestError# }.size
-		
-		errors := 0
-		summaries.each |TestSummary summary| { 
-			errors += summary.errors
+		countNumOf(TestError#) {
+			it.errors
 		}
-		return errors
 	}
 	
 	Int numSkipped() {
-		if (results.isEmpty)
-			throw Err("Can't find any results")
-		
-		summaries := results.findAll |XTestResult result->Bool| { result.typeof == TestSummary# }
-		if (summaries.isEmpty)
-			return results.findAll { it.typeof == TestSkipped# }.size
-		
-		skipped := 0
-		summaries.each |TestSummary summary| { 
-			skipped += summary.skipped
+		countNumOf(TestSkipped#) {
+			it.skipped
 		}
-		return skipped
 	}
 	
 	Int numPassed() {
-		if (results.isEmpty)
-			throw Err("Can't find any results")
-		
-		summaries := results.findAll |XTestResult result->Bool| { result.typeof == TestSummary# }
-		if (summaries.isEmpty)
-			return results.findAll { it.typeof == TestSuccess# }.size
-		
-		passed := 0
-		summaries.each |TestSummary summary| { 
-			passed += summary.successes
+		countNumOf(TestSuccess#) {
+			it.successes
 		}
-		return passed
+	}
+	
+	private Int countNumOf(Type type, |TestSummary->Int| fn) {	
+		count := 0
+		results.each |XTestResult result| { 
+			if (result.typeof == TestSummary#)
+				count += fn(result)
+			else if (result.typeof == type)
+				count += 1
+		}
+
+		return count
 	}
 	
 }

@@ -31,10 +31,10 @@ class Main : AbstractMain {
 			report :=(XmlReport) xfant.report()
 			report.write(output?.out ?: Env.cur.out, output != null) // If an output file is not specified, print to Env.cur
 			
-			if (report.numFailures > 0)
-				return -10
 			if (report.numErrors > 0)
 				return -20
+			if (report.numFailures > 0)
+				return -10
 			
 			return 0
 		}
