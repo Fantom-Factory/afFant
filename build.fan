@@ -4,7 +4,7 @@ class Build : BuildPod {
 	new make() {
 		podName = "xfant"
 		summary = "Fant like tool that shows test results in JUnit Xml"
-		version = Version("0.3.1")
+		version = Version("0.3.2")
 		
 		meta = [
 			"stripTest" : "true"
