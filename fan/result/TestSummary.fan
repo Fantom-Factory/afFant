@@ -19,15 +19,9 @@ class TestSummary : XTestResult {
 	new make(|This| f) {
 		f(this)
 	}
-		
-	** Start time of the first test
-	override DateTime started() {
-		results.first.started
-	}
 	
-	** Finish time of the last test
-	override DateTime finished() {
-		return results.last.finished
+	override Duration elapsed() {
+		return results.reduce(0ns) |Duration total, XTestResult result->Duration| { total + result.elapsed  }
 	}
 	 
 	** Frequency of tests by test type.
@@ -72,7 +66,7 @@ class TestSummary : XTestResult {
 			XAttr("errors", errors.toStr),
 			XAttr("failures", failures.toStr),
 			XAttr("skipped", skipped.toStr),
-			XAttr("time", elapsed.toSec.toStr),
+			XAttr("time", (elapsed.toMillis / 1000.0f).toStr),
 			XAttr("timestamp", timestamp.toIso),
 		}
 		

@@ -6,35 +6,30 @@ const class TestResult : XTestResult {
 	** See 'XTestResult.test'
 	override const Xtest test
 	
-	** See 'XTestResult.started'
-	override const DateTime started
-	
-	** See 'XTestResult.finished'
-	override const DateTime finished
+	override const Duration elapsed
 
 	** Constructor
-	new make(Xtest test, DateTime started) { 
-		this.test		 = test
-		this.started	= started
-		this.finished = DateTime.now
+	new make(Xtest test, Duration started) { 
+		this.test		= test
+		this.elapsed	= Duration.now - started
 	}
 
 	override XElem toXml() {
 		XElem("testcase") {
 			XAttr("name", test.name),
 			XAttr("classname", test.classname),
-			XAttr("time", elapsed.toSec.toStr),
+			XAttr("time", (elapsed.toMillis / 1000.0f).toStr),
 		}
 	}
 }
 
 const class TestSuccess: TestResult {
-	new make(Xtest test, DateTime started) 
+	new make(Xtest test, Duration started) 
 		: super(test, started) {}
 }
 
 const class TestSkipped : TestResult {
-	new make(Xtest test, DateTime started) 
+	new make(Xtest test, Duration started) 
 		: super(test, started) {}
 	
 	override XElem toXml() {
@@ -48,7 +43,7 @@ const class TestIssue : TestResult {
 	** Error produced during execution
 	const Err? err
 		
-	new make(Xtest test, DateTime started, Err err) 
+	new make(Xtest test, Duration started, Err err) 
 		: super(test, started) {
 		this.err = err
 	}
@@ -63,7 +58,7 @@ const class TestIssue : TestResult {
 }
 
 const class TestError : TestIssue { 
-	new make(Xtest test, DateTime started, Err err) 
+	new make(Xtest test, Duration started, Err err) 
 		: super(test, started, err) {}
 	
 	override XElem toXml() {
@@ -72,7 +67,7 @@ const class TestError : TestIssue {
 }
 
 const class TestFailure : TestIssue { 
-	new make(Xtest test, DateTime started, Err err) 
+	new make(Xtest test, Duration started, Err err) 
 		: super(test, started, err) {}
 	
 	override XElem toXml() {

@@ -17,16 +17,16 @@ class TestRunner {
 	** Run a 'TestCase' and returns a result.
 	protected XTestResult runTestCase(TestCase test) {
 		if (test.isIgnored) {
-			return TestSkipped(test, DateTime.now)
+			return TestSkipped(test, Duration.now)
 		}
 		
 		Test? target
-		DateTime? startTime
+		Duration? startTime
 				 
 		try {
 			target = test.makeTest				
 			target.setup
-			startTime = DateTime.now
+			startTime = Duration.now
 			test.call(target)
 			return TestSuccess(test, startTime)
 		}
@@ -45,7 +45,7 @@ class TestRunner {
 	** as summary.
 	protected TestSummary runTestSuite(TestSuite suite) {
 		tests := (suite.isIgnored) ? 
-			[TestSkipped(suite, DateTime.now)] :
+			[TestSkipped(suite, Duration.now)] :
 			suite.tests.map |Xtest test->XTestResult| { 
 				return run(test) 
 			}
