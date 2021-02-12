@@ -14,7 +14,7 @@ const class TestResult : XTestResult {
 		this.elapsed	= Duration.now - started
 	}
 
-	override XElem toXml() {
+	override XElem toXml(Bool removeProps := false) {
 		XElem("testcase") {
 			XAttr("name", test.name),
 			XAttr("classname", test.classname),
@@ -23,7 +23,7 @@ const class TestResult : XTestResult {
 	}
 }
 
-const class TestSuccess: TestResult {
+const class TestSuccess : TestResult {
 	new make(Xtest test, Duration started) 
 		: super(test, started) {}
 }
@@ -32,8 +32,8 @@ const class TestSkipped : TestResult {
 	new make(Xtest test, Duration started) 
 		: super(test, started) {}
 	
-	override XElem toXml() {
-		super.toXml.add(XElem("skipped"))
+	override XElem toXml(Bool removeProps := false) {
+		super.toXml(removeProps).add(XElem("skipped"))
 	}
 }
 
@@ -61,8 +61,8 @@ const class TestError : TestIssue {
 	new make(Xtest test, Duration started, Err err) 
 		: super(test, started, err) {}
 	
-	override XElem toXml() {
-		super.toXml.add(issue("error"))
+	override XElem toXml(Bool removeProps := false) {
+		super.toXml(removeProps).add(issue("error"))
 	}
 }
 
@@ -70,7 +70,7 @@ const class TestFailure : TestIssue {
 	new make(Xtest test, Duration started, Err err) 
 		: super(test, started, err) {}
 	
-	override XElem toXml() {
-		super.toXml.add(issue("failure"))
+	override XElem toXml(Bool removeProps := false) {
+		super.toXml(removeProps).add(issue("failure"))
 	}
 }	

@@ -7,6 +7,9 @@ class Main : AbstractMain {
 	
 	@Opt { help = "test all pods" }
 	Bool all
+	
+	@Opt { help = "remove properties from xml"; aliases=["n"] }
+	Bool noProps
 				
 	@Opt { help = "output file"; aliases=["o"] } 
 	File? output
@@ -14,6 +17,13 @@ class Main : AbstractMain {
 	override Int run() {		
 		Xfant? xfant
 		
+		echo("=================")
+		echo("=================")
+		echo("=================")
+		echo(noProps)
+		echo("=================")
+		echo("=================")
+		echo("=================")
 		// Add tests to execute
 		xfant = Xfant {}
 		xfant.addAll(all ? Pod.list : targets)
@@ -28,7 +38,7 @@ class Main : AbstractMain {
 		// Run tests
 		try {
 			xfant.run
-			report :=(XmlReport) xfant.report()
+			report :=(XmlReport) xfant.report(noProps)
 			report.write(output?.out ?: Env.cur.out, output != null) // If an output file is not specified, print to Env.cur
 			
 			if (report.numErrors > 0)

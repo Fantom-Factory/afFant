@@ -4,18 +4,20 @@ using xml
 class XmlReport : TestReport {	
 
 	** Test results to output
-	XTestResult[] results
+	XTestResult[] 	results
+	Bool 			removeProps
 	
 	** Constructor
-	new make(XTestResult[] results := [,]) {
-		this.results = results
+	new make(XTestResult[] results := [,], Bool removeProps := false) {
+		this.results 		= results
+		this.removeProps 	= removeProps
 	}
 	
 	** Write an Xml document to 'out' stream.
 	override Void write(OutStream out, Bool close := true) {
 		try {
 			doc	 := XDoc { XElem("testsuites"), }
-			results.each |XTestResult result| { doc.root.add(result.toXml) }
+			results.each |XTestResult result| { doc.root.add(result.toXml(removeProps)) }
 			
 			doc.write(out)
 		}

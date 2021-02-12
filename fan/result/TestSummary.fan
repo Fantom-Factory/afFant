@@ -56,7 +56,7 @@ class TestSummary : XTestResult {
 		frequency[TestSkipped#]
 	}
 	
-	override XElem toXml() { 
+	override XElem toXml(Bool removeProps := false) { 
 		xml := XElem("testsuite") {
 			XAttr("name", test.name),
 			XAttr("classname", test.classname),
@@ -70,7 +70,8 @@ class TestSummary : XTestResult {
 			XAttr("timestamp", timestamp.toIso),
 		}
 		
-		xml.add(propertiesToXml(Env.cur.vars))
+		if (!removeProps)
+			xml.add(propertiesToXml(Env.cur.vars))
 		
 		results.each |r| { xml.add(r.toXml) }
 		

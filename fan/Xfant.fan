@@ -82,8 +82,8 @@ class Xfant {
 	}
 	
 	** Write a report of the results in 'out' stream
-	TestReport report() {
-			return XmlReport(results)
+	TestReport report(Bool noProps := false) {
+			return XmlReport(results, noProps)
 	}
 		
 	** Run the test cases and saves the results
