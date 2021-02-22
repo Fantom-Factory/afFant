@@ -16,14 +16,7 @@ class Main : AbstractMain {
 	
 	override Int run() {		
 		Xfant? xfant
-		
-		echo("=================")
-		echo("=================")
-		echo("=================")
-		echo(noProps)
-		echo("=================")
-		echo("=================")
-		echo("=================")
+
 		// Add tests to execute
 		xfant = Xfant {}
 		xfant.addAll(all ? Pod.list : targets)

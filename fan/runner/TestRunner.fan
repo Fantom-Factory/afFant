@@ -21,12 +21,11 @@ class TestRunner {
 		}
 		
 		Test? target
-		Duration? startTime
+		startTime := Duration.now
 				 
 		try {
 			target = test.makeTest				
 			target.setup
-			startTime = Duration.now
 			test.call(target)
 			return TestSuccess(test, startTime)
 		}
@@ -37,6 +36,7 @@ class TestRunner {
 			return TestError(test, startTime, err)
 		}
 		finally {
+			// TODO catch errors and report them
 			target?.teardown
 		}
 	}
