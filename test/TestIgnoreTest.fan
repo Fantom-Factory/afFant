@@ -71,7 +71,7 @@ class TestSkippedTest : Test {
 		
 		verifyNotNull(classname)
 		verifyEq(classname.name, "classname")
-		verifyEq(classname.val, "xfant::TestSkippedTest")
+		verifyEq(classname.val, "afFant::TestSkippedTest")
 	}
 		
 	Void testXmlTimeAttr() {	 
@@ -79,7 +79,7 @@ class TestSkippedTest : Test {
 		
 		verifyNotNull(time)
 		verifyEq(time.name, "time")
-		verifyEq(time.val, "0")
+		verifyEq(time.val, "0.0")
 	}		
 	
 	Void testXElem() {	 

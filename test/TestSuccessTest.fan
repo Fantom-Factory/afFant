@@ -8,7 +8,7 @@ class TestSuccessTest : Test {
 	
 	override Void setup() {
 		runner = TestRunner()
-		test	 = TestCase(xfant::ExampleTest#testShouldPass)
+		test	 = TestCase(ExampleTest#testShouldPass)
 		result = runner.run(test)
 		xml		= result.toXml
 	}
@@ -18,7 +18,7 @@ class TestSuccessTest : Test {
 	}
 	
 	Void testShouldPass2() {
-		t2	 := TestCase(xfant::ExampleTest#testShouldPass2)
+		t2	 := TestCase(ExampleTest#testShouldPass2)
 		res2 := runner.run(t2)
 		
 		verifyType(res2, TestSuccess#)
@@ -41,7 +41,7 @@ class TestSuccessTest : Test {
 		
 		verifyNotNull(classname)
 		verifyEq(classname.name, "classname")
-		verifyEq(classname.val, "xfant::ExampleTest")
+		verifyEq(classname.val, "afFant::ExampleTest")
 	}
 	
 	Void testXmlTimeAttr() {	 
@@ -49,6 +49,6 @@ class TestSuccessTest : Test {
 		
 		verifyNotNull(time)
 		verifyEq(time.name, "time")
-		verifyEq(time.val, "0")
+		verifyEq(time.val, "0.0")
 	}
 }

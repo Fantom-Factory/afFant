@@ -34,7 +34,7 @@ class TestFailureTest : Test {
 		
 		verifyNotNull(classname)
 		verifyEq(classname.name, "classname")
-		verifyEq(classname.val, "xfant::ExampleTest")
+		verifyEq(classname.val, "afFant::ExampleTest")
 	}
 	
 	Void testXmlTimeAttr() {	 
@@ -42,7 +42,7 @@ class TestFailureTest : Test {
 		
 		verifyNotNull(time)
 		verifyEq(time.name, "time")
-		verifyEq(time.val, "0")
+		verifyEq(time.val, "0.0")
 	}
 	
 	Void testXmlXElems() {	

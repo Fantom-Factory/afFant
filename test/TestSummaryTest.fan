@@ -44,14 +44,14 @@ class TestSummaryTest : Test {
 		classname := xml.attr("classname", false)
 		verifyNotNull(classname)
 		verifyEq(classname.name, "classname")
-		verifyEq(classname.val, "xfant::ExampleTest")
+		verifyEq(classname.val, "afFant::ExampleTest")
 	}
 	
 	Void testXAttrPackage() {
 		attr := xml.attr("package", false)
 		verifyNotNull(attr)
 		verifyEq(attr.name, "package")
-		verifyEq(attr.val, "xfant")
+		verifyEq(attr.val, "afFant")
 	}	
 	
 	Void testXAttrHostname() {

@@ -2,3 +2,5 @@
 build/
 
 fpm.props
+
+*.pod

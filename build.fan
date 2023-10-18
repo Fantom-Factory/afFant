@@ -2,12 +2,13 @@ using build
 
 class Build : BuildPod {
 	new make() {
-		podName = "xfant"
+		podName = "afFant"
 		summary = "Fant like tool that shows test results in JUnit Xml"
-		version = Version("0.3.3")
+		version = Version("0.1.0")
 		
 		meta = [
-			"stripTest" : "true"
+			"stripTest" : "true",
+			"pod.dis"	: "afFant"
 		]
 		
 		depends = [
@@ -23,7 +24,7 @@ class Build : BuildPod {
 			`fan/report/`,
 			`fan/runner/`,
 			`test/`
-		] 
+		]
 		
 		resDirs = [
 			`doc/`
