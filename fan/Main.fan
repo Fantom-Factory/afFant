@@ -13,10 +13,13 @@ class Main : AbstractMain {
 				
 	@Opt { help = "output file"; aliases=["o"] } 
 	File? output
+
+	@Opt { help = "enable debug mode"; aliases=["db"] } 
+	Bool debug
 	
 	override Int run() {		
 		Xfant? xfant
-
+		 
 		// Add tests to execute
 		xfant = Xfant {}
 		xfant.addAll(all ? Pod.list : targets)
@@ -28,6 +31,9 @@ class Main : AbstractMain {
 			return usage
 		}
 		 
+		if (debug)
+			this.typeof.pod.log.level = LogLevel.debug
+		
 		// Run tests
 		try {
 			xfant.run
