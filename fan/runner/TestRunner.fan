@@ -8,10 +8,8 @@ class TestRunner {
 	XTestResult run(Xtest test) {	
 		switch (test.typeof) {
 			case TestCase#:
-				log.debug("Running test: " + test.name)
 				return runTestCase(test)
 			case TestSuite#:
-				log.debug("Running test suite: " + test.name)
 				return runTestSuite(test)
 			default:
 				throw ArgErr("Unknown test type: ${test}")
@@ -28,6 +26,8 @@ class TestRunner {
 		startTime := Duration.now
 				 
 		try {
+			log.debug("-- Run:  $test.classname" + "." + "$test.name")
+			
 			target = test.makeTest
 			
 			try target->curTestMethod = test.method
@@ -35,16 +35,18 @@ class TestRunner {
 
 			target.setup
 			test.call(target)
-			log.debug("Test successful")
-			return TestSuccess(test, startTime)
+			log.debug("   Pass: $test.classname" + "." + "$test.name [${target->verifyCount}]")
+			return TestSuccess(test, startTime, target->verifyCount)
 		}
 		catch (TestErr err) {
-			log.debug("Test failed")
-			return TestFailure(test, startTime, err)
+			log.debug("TEST FAILED")
+			log.debug(err.traceToStr)
+			return TestFailure(test, startTime, target->verifyCount, err)
 		}
 		catch (Err err) {
-			log.debug("Test errored")
-			return TestError(test, startTime, err)
+			log.debug("TEST FAILED")
+			log.debug(err.traceToStr)
+			return TestError(test, startTime, target->verifyCount, err)
 		}
 		finally {
 			// TODO catch errors and report them
