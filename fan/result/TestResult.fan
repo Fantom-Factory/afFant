@@ -12,6 +12,8 @@ const class TestResult : XTestResult {
 	** The number of verifies present in the test
 	const Int? numVerifies
 	
+	internal const Log log := this.typeof.pod.log
+	
 	** Constructor
 	new make(Xtest test, Duration started, Int numVerifies) { 
 		this.test			= test
@@ -26,12 +28,18 @@ const class TestResult : XTestResult {
 			XAttr("time", (elapsed.toMillis / 1000.0f).toStr),
 		}
 	}
+	
+	virtual Void printResult() {}
 }
 
 const class TestSuccess : TestResult {
 	
 	new make(Xtest test, Duration started, Int numVerifies) 
 		: super(test, started, numVerifies) {}
+	
+	override Void printResult() {
+		log.debug("   Pass: $test.classname" + "." + "$test.name [$numVerifies]")
+	}
 }
 
 const class TestSkipped : TestResult {
@@ -69,6 +77,11 @@ const class TestError : TestIssue {
 	override XElem toXml(Bool removeProps := false) {
 		super.toXml(removeProps).add(issue("error"))
 	}
+	
+	override Void printResult() {
+		log.debug("TEST FAILED")
+		log.debug(err.traceToStr)
+	}
 }
 
 const class TestFailure : TestIssue { 
@@ -77,5 +90,10 @@ const class TestFailure : TestIssue {
 	
 	override XElem toXml(Bool removeProps := false) {
 		super.toXml(removeProps).add(issue("failure"))
+	}
+	
+	override Void printResult() {
+		log.debug("TEST FAILED")
+		log.debug(err.traceToStr)
 	}
 }	

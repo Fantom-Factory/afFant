@@ -18,11 +18,11 @@ class TestRunner {
 	
 	** Run a 'TestCase' and returns a result.
 	protected XTestResult runTestCase(TestCase test) {
-		if (test.isIgnored) {
+		if (test.isIgnored) 
 			return TestSkipped(test, Duration.now)
-		}
 		
 		Test? target
+		TestResult? result
 		startTime := Duration.now
 				 
 		try {
@@ -35,34 +35,28 @@ class TestRunner {
 
 			target.setup
 			test.call(target)
-			log.debug("   Pass: $test.classname" + "." + "$test.name [${target->verifyCount}]")
-			return TestSuccess(test, startTime, target->verifyCount)
+			result =  TestSuccess(test, startTime, target->verifyCount)
 		}
 		catch (TestErr err) {
-			log.debug("TEST FAILED")
-			log.debug(err.traceToStr)
-			return TestFailure(test, startTime, target->verifyCount, err)
+			result =  TestFailure(test, startTime, target->verifyCount, err)
 		}
 		catch (Err err) {
-			log.debug("TEST FAILED")
-			log.debug(err.traceToStr)
-			return TestError(test, startTime, target->verifyCount, err)
+			result = TestError(test, startTime, target->verifyCount, err)
 		}
 		finally {
-			// TODO catch errors and report them
 			target?.teardown
+			result.printResult
 		}
+		
+		return result
 	}
 	
 	** Run all the tests in the suite, and returns the result
 	** as summary.
 	protected TestSummary runTestSuite(TestSuite suite) {
-		tests := (suite.isIgnored) ? 
-			[TestSkipped(suite, Duration.now)] :
-			suite.tests.map |Xtest test->XTestResult| { 
-				return run(test) 
-			}
-		
+		tests := (suite.isIgnored) 
+			? [TestSkipped(suite, Duration.now)]
+			: suite.tests.map |Xtest test->XTestResult| { run(test) }
 			
 		summary := TestSummary {
 			it.test		= suite
