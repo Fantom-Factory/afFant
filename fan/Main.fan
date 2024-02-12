@@ -49,7 +49,7 @@ class Main : AbstractMain {
 				numMethods = numMethods + summary.results.size
 				summary.results.each |TestResult result| {
 					numVerifies += result.numVerifies
-					if (result.typeof == TestFailure#) {
+					if (result.typeof == TestFailure# || result.typeof == TestError#) {
 						if (numFailures == 0) {
 							log.debug("")
 							log.debug("Failed:")
